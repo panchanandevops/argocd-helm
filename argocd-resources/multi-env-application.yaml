@@ -1,18 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apps-multiple-source-application
+  name: hello-app
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
-  destination:
-    name: in-cluster
-    namespace: argocd
-  source:
-    path: multi-env-helm-chart
-    repoURL: https://github.com/panchanandevops/argocd-helm.git
-    targetRevision: HEAD
-    directory: {}
   project: default
+  source:
+    repoURL: https://github.com/panchanandevops/argocd-public.git
+    targetRevision: HEAD
+    path: multi-env-helm-chart
+  destination:
+    server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
