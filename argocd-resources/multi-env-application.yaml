@@ -7,8 +7,8 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: multiple-source-application
-    repoURL: https://github.com/morey-tech/argo-cd-helm-values-demo
+    path: multi-env-helm-chart
+    repoURL: https://github.com/panchanandevops/argocd-helm.git
     targetRevision: HEAD
     directory: {}
   project: default
