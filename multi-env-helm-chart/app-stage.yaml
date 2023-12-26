@@ -4,9 +4,6 @@ metadata:
   name: hello-world-stage
   namespace: argocd
 spec:
-  destination:
-    namespace: stage
-    name: kind
   project: default
   sources:
   # Chart from Chart Repo
@@ -21,9 +18,15 @@ spec:
   - repoURL: 'https://github.com/panchanandevops/argocd-helm.git'
     targetRevision: HEAD
     ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stage
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
+    - Validate=true
     - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true

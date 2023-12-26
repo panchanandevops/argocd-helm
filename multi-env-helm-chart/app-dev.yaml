@@ -4,9 +4,6 @@ metadata:
   name: hello-world-dev
   namespace: argocd
 spec:
-  destination:
-    namespace: dev
-    name: kind
   project: default
   sources:
   # Chart from Chart Repo
@@ -21,9 +18,15 @@ spec:
   - repoURL: 'https://github.com/panchanandevops/argocd-helm.git'
     targetRevision: HEAD
     ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
+    - Validate=true
     - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
