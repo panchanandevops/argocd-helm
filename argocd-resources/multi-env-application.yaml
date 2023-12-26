@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/panchanandevops/argocd-public.git
+    repoURL: https://github.com/panchanandevops/argocd-helm.git
     targetRevision: HEAD
     path: multi-env-helm-chart
   destination:
