@@ -1,0 +1,15 @@
+namespace: prod
+namePrefix: prod-
+resources:
+  - ../../base
+  - ingress.yaml
+  - namespace.yaml
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: nginx-deployment
+    path: patch-replicas.yaml
+commonLabels:
+  environment: prod
