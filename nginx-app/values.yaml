@@ -1,0 +1,22 @@
+namespace:
+  name: dev
+
+deployment:
+  name: nginx-deployment
+  replicas: 2
+  image: nginx:latest
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+service:
+  name: nginx-service
+
+ingress:
+  name: nginx-ingress
+  className: nginx
+  host: panchanandevops.com
