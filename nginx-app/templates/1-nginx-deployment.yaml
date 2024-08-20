@@ -1,29 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
-  namespace: {{ .Values.namespace.name }}
+  name: {{ .Release.Name }}-{{ .Values.deployment.name }}
+  namespace: {{ .Values.namespace.name | default .Release.Namespace }}
   labels:
-    app: nginx
+    app: {{ .Release.Name }}-{{ .Values.commonLabel }}
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      app: nginx
+      app: {{ .Release.Name }}-{{ .Values.commonLabel }}
   template:
     metadata:
       labels:
-        app: nginx
+        app: {{ .Release.Name }}-{{ .Values.commonLabel }}
     spec:
       containers:
-      - name: nginx
-        image: {{ .Values.deployment.image }}
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            memory: {{ .Values.deployment.resources.requests.memory }}
-            cpu: {{ .Values.deployment.resources.requests.cpu }}
-          limits:
-            memory: {{ .Values.deployment.resources.limits.memory }}
-            cpu: {{ .Values.deployment.resources.limits.cpu }}
+        {{- include "mychart.container" . | nindent 8 }}
